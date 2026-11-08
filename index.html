@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE CRAZY TOWN | Official 3D Animated Series Portal</title>
+    
+    <!-- Google Fonts: Fredoka & Space Grotesk & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        townDark: '#0B0D17',
+                        townCard: '#151928',
+                        townBorder: '#262C40',
+                        zikoBlue: '#0070F3',
+                        boboOrange: '#FF6B00',
+                        mimiPurple: '#9D4EDD',
+                        roboYellow: '#FFD166',
+                        townNeon: '#00F5D4'
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'cursive'],
+                        outfit: ['Outfit', 'sans-serif'],
+                        mono: ['Space Grotesk', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #0B0D17;
+            color: #F3F4F6;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B0D17;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262C40;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF6B00;
+        }
+
+        .glass-panel {
+            background: rgba(21, 25, 40, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-glow {
+            background: radial-gradient(circle at 50% 30%, rgba(255, 107, 0, 0.15) 0%, rgba(157, 78, 221, 0.1) 40%, rgba(11, 13, 23, 0) 70%);
+        }
+
+        .character-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .character-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .glow-ziko:hover { border-color: #0070F3; box-shadow: 0 0 25px rgba(0, 112, 243, 0.35); }
+        .glow-bobo:hover { border-color: #FF6B00; box-shadow: 0 0 25px rgba(255, 107, 0, 0.35); }
+        .glow-mimi:hover { border-color: #9D4EDD; box-shadow: 0 0 25px rgba(157, 78, 221, 0.35); }
+        .glow-robo:hover { border-color: #FFD166; box-shadow: 0 0 25px rgba(255, 209, 102, 0.35); }
+
+        .pulse-yellow {
+            animation: pulseYellow 2s infinite;
+        }
+        @keyframes pulseYellow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 209, 102, 0.7); }
+            50% { box-shadow: 0 0 0 12px rgba(255, 209, 102, 0); }
+        }
+
+        /* SVG Cartoon Map Hotspot Ping */
+        .map-ping {
+            animation: mapPing 1.8s infinite;
+        }
+        @keyframes mapPing {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-boboOrange selection:text-white">
+
+    <!-- GLOBAL SOUND ENGINE INTERACTION BANNER -->
+    <div id="audio-toast" class="fixed top-4 right-4 z-50 hidden glass-panel px-4 py-3 rounded-xl border border-boboOrange flex items-center gap-3 shadow-2xl">
+        <i id="toast-icon" class="fa-solid fa-volume-high text-boboOrange text-lg animate-bounce"></i>
+        <div>
+            <div id="toast-title" class="font-fredoka text-sm text-white">Audio Feedback Playing</div>
+            <div id="toast-subtitle" class="text-xs text-gray-400">Synthesized 3D sound active</div>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 z-40 glass-panel border-b border-townBorder/50 py-4">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="#home" onclick="playSynthesizedSound('logo')" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-gradient-to-tr from-boboOrange via-roboYellow to-mimiPurple rounded-xl flex items-center justify-center font-fredoka font-bold text-xl text-townDark shadow-lg group-hover:rotate-6 transition-transform">
+                    CT
+                </div>
+                <div>
+                    <span class="font-fredoka text-xl md:text-2xl font-bold tracking-wide text-white group-hover:text-boboOrange transition-colors">
+                        THE CRAZY TOWN
+                    </span>
+                    <span class="block text-[9px] uppercase font-mono tracking-widest text-roboYellow">3D Animated Television Series</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <div class="hidden lg:flex items-center space-x-8 text-sm font-semibold tracking-wide">
+                <a href="#hero" class="hover:text-boboOrange transition-colors">Home</a>
+                <a href="#characters" class="hover:text-zikoBlue transition-colors">Character Bible</a>
+                <a href="#episodes" class="hover:text-mimiPurple transition-colors">Episodes & Scripts</a>
+                <a href="#map" class="hover:text-roboYellow transition-colors">Town Map</a>
+                <a href="#production" class="hover:text-townNeon transition-colors">Production Lab</a>
+                <a href="#soundboard" class="hover:text-boboOrange transition-colors">Soundboard</a>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="hidden sm:flex items-center gap-4">
+                <button onclick="toggleSoundFX()" id="sound-toggle-btn" class="px-3.5 py-2 rounded-lg bg-townCard border border-townBorder text-xs uppercase font-mono text-gray-300 hover:text-white hover:border-white transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-volume-high text-boboOrange" id="sound-icon"></i>
+                    <span id="sound-status-text">Audio: ON</span>
+                </button>
+                <a href="#episodes" onclick="playSynthesizedSound('click')" class="bg-gradient-to-r from-boboOrange to-roboYellow text-townDark font-fredoka text-sm uppercase px-5 py-2.5 rounded-xl font-bold shadow-lg hover:brightness-110 transition-all transform active:scale-95">
+                    Watch Series
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger -->
+            <button id="mobile-menu-btn" class="lg:hidden text-2xl text-white focus:outline-none">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Drawer -->
+        <div id="mobile-drawer" class="hidden lg:hidden bg-townDark/95 border-b border-townBorder px-6 pt-4 pb-6 space-y-3 font-fredoka">
+            <a href="#hero" class="mobile-link block py-2 text-white hover:text-boboOrange border-b border-townBorder/40">Home</a>
+            <a href="#characters" class="mobile-link block py-2 text-white hover:text-zikoBlue border-b border-townBorder/40">Character Bible</a>
+            <a href="#episodes" class="mobile-link block py-2 text-white hover:text-mimiPurple border-b border-townBorder/40">Episodes & Scripts</a>
+            <a href="#map" class="mobile-link block py-2 text-white hover:text-roboYellow border-b border-townBorder/40">Town Map</a>
+            <a href="#production" class="mobile-link block py-2 text-white hover:text-townNeon border-b border-townBorder/40">Production Lab</a>
+            <a href="#soundboard" class="mobile-link block py-2 text-white hover:text-boboOrange">Soundboard</a>
+        </div>
+    </nav>
+
+    <!-- 1. HERO SECTION -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center pt-28 pb-16 hero-glow overflow-hidden">
+        
+        <!-- Background Decorative Particles -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-zikoBlue/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-10 right-10 w-96 h-96 bg-boboOrange/10 rounded-full blur-3xl"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-mimiPurple/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left Headline Content -->
+            <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+                
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-townCard border border-townBorder shadow-lg">
+                    <span class="w-2.5 h-2.5 rounded-full bg-roboYellow animate-pulse"></span>
+                    <span class="font-mono text-xs uppercase text-roboYellow tracking-wider">Official 3D Television Series Hub</span>
+                </div>
+
+                <h1 class="font-fredoka text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[1.05]">
+                    THE CRAZY <br />
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-boboOrange via-roboYellow to-mimiPurple">
+                        TOWN
+                    </span>
+                </h1>
+
+                <p class="font-outfit text-lg sm:text-xl text-gray-300 font-light max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                    Adventure, Laughs & Unpredictable Mayhem! Join <strong class="text-zikoBlue">Ziko</strong>, <strong class="text-boboOrange">Bobo</strong>, <strong class="text-mimiPurple">Mimi</strong>, and <strong class="text-roboYellow">Robo</strong> as they solve high-energy mysteries in the world's most chaotic town.
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                    <a href="#episodes" onclick="playSynthesizedSound('whoosh')" class="w-full sm:w-auto bg-gradient-to-r from-boboOrange to-roboYellow text-townDark font-fredoka font-bold text-base px-8 py-4 rounded-xl shadow-xl hover:shadow-boboOrange/30 hover:scale-105 transition-all text-center">
+                        <i class="fa-solid fa-play mr-2"></i> Watch Episodes
+                    </a>
+                    <a href="#characters" onclick="playSynthesizedSound('click')" class="w-full sm:w-auto bg-townCard hover:bg-townBorder text-white border border-townBorder font-fredoka font-semibold text-base px-8 py-4 rounded-xl transition-all text-center">
+                        <i class="fa-solid fa-users mr-2 text-zikoBlue"></i> Meet The Crew
+                    </a>
+                    <a href="#map" onclick="playSynthesizedSound('ping')" class="w-full sm:w-auto bg-townCard hover:bg-townBorder text-white border border-townBorder font-fredoka font-semibold text-base px-8 py-4 rounded-xl transition-all text-center">
+                        <i class="fa-solid fa-map-location-dot mr-2 text-mimiPurple"></i> Explore Map
+                    </a>
+                </div>
+
+                <!-- Stats Bar -->
+                <div class="pt-8 border-t border-townBorder/60 grid grid-cols-3 gap-4 text-center lg:text-left max-w-md mx-auto lg:mx-0">
+                    <div>
+                        <span class="block font-fredoka text-2xl font-bold text-white">4</span>
+                        <span class="font-mono text-xs text-gray-400 uppercase">Core Heroes</span>
+                    </div>
+                    <div>
+                        <span class="block font-fredoka text-2xl font-bold text-roboYellow">4k 3D</span>
+                        <span class="font-mono text-xs text-gray-400 uppercase">Movie Quality</span>
+                    </div>
+                    <div>
+                        <span class="block font-fredoka text-2xl font-bold text-boboOrange">Season 1</span>
+                        <span class="font-mono text-xs text-gray-400 uppercase">Now Streaming</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right 3D Character Spotlight Stage -->
+            <div class="lg:col-span-5 relative">
+                <div class="relative w-full aspect-square max-w-md mx-auto glass-panel rounded-3xl p-6 border border-townBorder flex flex-col justify-between overflow-hidden shadow-2xl group">
+                    
+                    <!-- Top Badge -->
+                    <div class="flex items-center justify-between z-10">
+                        <span class="font-mono text-xs uppercase text-gray-400 tracking-wider">3D Model Preview</span>
+                        <span id="hero-char-tag" class="px-3 py-1 rounded-full bg-zikoBlue/20 text-zikoBlue font-fredoka text-xs font-semibold border border-zikoBlue/40">
+                            ZIKO - LEADER
+                        </span>
+                    </div>
+
+                    <!-- Render Canvas Visual (SVG 3D Character Mock Studio) -->
+                    <div class="relative flex-1 flex items-center justify-center my-4">
+                        
+                        <!-- Ziko Visual -->
+                        <div id="stage-ziko" class="hero-stage-avatar text-center transition-all duration-500 transform scale-100 opacity-100">
+                            <div class="w-44 h-44 mx-auto rounded-full bg-gradient-to-tr from-zikoBlue to-cyan-400 p-1 shadow-2xl">
+                                <div class="w-full h-full rounded-full bg-townDark flex items-center justify-center relative overflow-hidden">
+                                    <svg viewBox="0 0 200 200" class="w-36 h-36">
+                                        <!-- Hair -->
+                                        <path d="M50 70 Q 100 20 150 70 Q 160 50 140 30 Q 100 10 60 30 Z" fill="#654321"/>
+                                        <!-- Face -->
+                                        <circle cx="100" cy="100" r="45" fill="#FCD5CE"/>
+                                        <!-- Brown Eyes -->
+                                        <circle cx="85" cy="95" r="7" fill="#582F0E"/>
+                                        <circle cx="115" cy="95" r="7" fill="#582F0E"/>
+                                        <circle cx="87" cy="93" r="2.5" fill="#FFF"/>
+                                        <circle cx="117" cy="93" r="2.5" fill="#FFF"/>
+                                        <!-- Smile -->
+                                        <path d="M85 115 Q 100 130 115 115" stroke="#333" stroke-width="4" fill="none" stroke-linecap="round"/>
+                                        <!-- Blue Hoodie Collar -->
+                                        <path d="M60 140 Q 100 170 140 140 L 150 190 L 50 190 Z" fill="#0070F3"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3 class="font-fredoka text-2xl font-bold text-white mt-4">ZIKO</h3>
+                            <p class="text-xs text-gray-400 font-mono">16 Y/O • Adventurer • Leader</p>
+                        </div>
+
+                        <!-- Bobo Visual -->
+                        <div id="stage-bobo" class="hero-stage-avatar text-center transition-all duration-500 transform scale-90 opacity-0 absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                            <div class="w-44 h-44 mx-auto rounded-full bg-gradient-to-tr from-boboOrange to-amber-300 p-1 shadow-2xl">
+                                <div class="w-full h-full rounded-full bg-townDark flex items-center justify-center relative overflow-hidden">
+                                    <svg viewBox="0 0 200 200" class="w-36 h-36">
+                                        <!-- Short dark hair -->
+                                        <circle cx="100" cy="70" r="50" fill="#222"/>
+                                        <!-- Chubby Round Face -->
+                                        <circle cx="100" cy="105" r="52" fill="#FFE5D9"/>
+                                        <!-- Cheerful Eyes -->
+                                        <circle cx="80" cy="100" r="6" fill="#111"/>
+                                        <circle cx="120" cy="100" r="6" fill="#111"/>
+                                        <!-- Big Laugh Mouth -->
+                                        <path d="M78 115 Q 100 145 122 115 Z" fill="#D90429"/>
+                                        <!-- Orange T-Shirt -->
+                                        <path d="M50 150 Q 100 180 150 150 L 160 200 L 40 200 Z" fill="#FF6B00"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3 class="font-fredoka text-2xl font-bold text-white mt-4">BOBO</h3>
+                            <p class="text-xs text-gray-400 font-mono">16 Y/O • Comedy Relief • Snack Master</p>
+                        </div>
+
+                        <!-- Mimi Visual -->
+                        <div id="stage-mimi" class="hero-stage-avatar text-center transition-all duration-500 transform scale-90 opacity-0 absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                            <div class="w-44 h-44 mx-auto rounded-full bg-gradient-to-tr from-mimiPurple to-pink-400 p-1 shadow-2xl">
+                                <div class="w-full h-full rounded-full bg-townDark flex items-center justify-center relative overflow-hidden">
+                                    <svg viewBox="0 0 200 200" class="w-36 h-36">
+                                        <!-- Ponytail Hair -->
+                                        <circle cx="140" cy="70" r="22" fill="#3D0066"/>
+                                        <path d="M50 80 Q 100 30 150 80" fill="#3D0066"/>
+                                        <!-- Face -->
+                                        <circle cx="100" cy="100" r="44" fill="#FCD5CE"/>
+                                        <!-- Expressive Eyes -->
+                                        <ellipse cx="82" cy="95" rx="7" ry="9" fill="#2B9348"/>
+                                        <ellipse cx="118" cy="95" rx="7" ry="9" fill="#2B9348"/>
+                                        <!-- Smart Smile -->
+                                        <path d="M88 118 Q 100 126 112 118" stroke="#333" stroke-width="3" fill="none"/>
+                                        <!-- Purple Jacket -->
+                                        <path d="M55 140 Q 100 170 145 140 L 155 190 L 45 190 Z" fill="#9D4EDD"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3 class="font-fredoka text-2xl font-bold text-white mt-4">MIMI</h3>
+                            <p class="text-xs text-gray-400 font-mono">15 Y/O • Tech Strategist • Brains</p>
+                        </div>
+
+                        <!-- Robo Visual -->
+                        <div id="stage-robo" class="hero-stage-avatar text-center transition-all duration-500 transform scale-90 opacity-0 absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                            <div class="w-44 h-44 mx-auto rounded-full bg-gradient-to-tr from-roboYellow to-yellow-100 p-1 shadow-2xl">
+                                <div class="w-full h-full rounded-full bg-townDark flex items-center justify-center relative overflow-hidden">
+                                    <svg viewBox="0 0 200 200" class="w-36 h-36">
+                                        <!-- Rounded Yellow Head -->
+                                        <rect x="50" y="50" width="100" height="90" rx="40" fill="#FFD166"/>
+                                        <!-- Antenna -->
+                                        <line x1="100" y1="50" x2="100" y2="25" stroke="#FFD166" stroke-width="6"/>
+                                        <circle cx="100" cy="20" r="8" fill="#00F5D4"/>
+                                        <!-- Blue Glowing Visor Screen -->
+                                        <rect x="65" y="70" width="70" height="40" rx="15" fill="#111"/>
+                                        <circle cx="85" cy="90" r="9" fill="#0070F3" class="animate-pulse"/>
+                                        <circle cx="115" cy="90" r="9" fill="#0070F3" class="animate-pulse"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h3 class="font-fredoka text-2xl font-bold text-white mt-4">ROBO</h3>
+                            <p class="text-xs text-gray-400 font-mono">Robot • Wildcard & Hologram Mascot</p>
+                        </div>
+
+                    </div>
+
+                    <!-- Bottom Character Switcher Selector -->
+                    <div class="grid grid-cols-4 gap-2 z-10 pt-2 border-t border-townBorder">
+                        <button onclick="switchHeroStage('ziko')" class="hero-nav-btn py-2 rounded-lg bg-zikoBlue/20 text-zikoBlue font-fredoka text-xs font-bold hover:bg-zikoBlue hover:text-white transition-all">
+                            ZIKO
+                        </button>
+                        <button onclick="switchHeroStage('bobo')" class="hero-nav-btn py-2 rounded-lg bg-townCard text-gray-400 font-fredoka text-xs font-bold hover:bg-boboOrange hover:text-white transition-all">
+                            BOBO
+                        </button>
+                        <button onclick="switchHeroStage('mimi')" class="hero-nav-btn py-2 rounded-lg bg-townCard text-gray-400 font-fredoka text-xs font-bold hover:bg-mimiPurple hover:text-white transition-all">
+                            MIMI
+                        </button>
+                        <button onclick="switchHeroStage('robo')" class="hero-nav-btn py-2 rounded-lg bg-townCard text-gray-400 font-fredoka text-xs font-bold hover:bg-roboYellow hover:text-townDark transition-all">
+                            ROBO
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 2. CHARACTER ROSTER SECTION (Strict Visual & Personality Consistency Spec Sheet) -->
+    <section id="characters" class="py-24 bg-townDark relative border-t border-townBorder">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="font-mono text-xs uppercase text-zikoBlue tracking-widest block mb-2">Strict Model Sheets & Specs</span>
+                <h2 class="font-fredoka text-4xl sm:text-5xl font-bold text-white uppercase">
+                    PERMANENT CHARACTER ROSTER
+                </h2>
+                <p class="text-gray-400 text-sm mt-3">
+                    Character designs, outfit palettes, facial proportions, and personality traits remain 100% consistent throughout all episodes.
+                </p>
+            </div>
+
+            <!-- Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- ZIKO CARD -->
+                <div class="character-card glass-panel rounded-2xl p-6 border border-townBorder glow-ziko flex flex-col justify-between">
+                    <div>
+                        <!-- Header & Badge -->
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-zikoBlue/20 text-zikoBlue text-xs font-mono font-bold">16 YEARS OLD</span>
+                            <span class="text-xs text-gray-400 font-mono">ID: CT-01</span>
+                        </div>
+
+                        <!-- Character Visual Thumbnail -->
+                        <div class="w-full h-48 rounded-xl bg-gradient-to-b from-zikoBlue/20 to-townCard flex items-center justify-center relative overflow-hidden border border-zikoBlue/30 mb-5">
+                            <svg viewBox="0 0 200 200" class="w-36 h-36">
+                                <path d="M50 70 Q 100 20 150 70 Q 160 50 140 30 Q 100 10 60 30 Z" fill="#654321"/>
+                                <circle cx="100" cy="100" r="45" fill="#FCD5CE"/>
+                                <circle cx="85" cy="95" r="7" fill="#582F0E"/>
+                                <circle cx="115" cy="95" r="7" fill="#582F0E"/>
+                                <path d="M85 115 Q 100 130 115 115" stroke="#333" stroke-width="4" fill="none"/>
+                                <path d="M60 140 Q 100 170 140 140 L 150 190 L 50 190 Z" fill="#0070F3"/>
+                            </svg>
+                        </div>
+
+                        <h3 class="font-fredoka text-3xl font-bold text-white mb-1">ZIKO</h3>
+                        <p class="text-xs text-zikoBlue font-semibold uppercase tracking-wider mb-4">Team Leader & Adventurer</p>
+
+                        <!-- Visual Specs Sheet -->
+                        <div class="space-y-2 text-xs text-gray-300 font-outfit border-t border-b border-townBorder py-3 mb-4">
+                            <div><strong class="text-gray-400 font-mono">Hair:</strong> Brown, layered stylish cut</div>
+                            <div><strong class="text-gray-400 font-mono">Eyes:</strong> Expressive warm brown</div>
+                            <div><strong class="text-gray-400 font-mono">Outfit:</strong> Blue hoodie, black trousers, white sneakers</div>
+                            <div><strong class="text-gray-400 font-mono">Speciality:</strong> Tactical courage & fast decision making</div>
+                        </div>
+
+                        <!-- Stats Bar -->
+                        <div class="space-y-2 mb-6">
+                            <div class="flex justify-between text-[11px] font-mono text-gray-400">
+                                <span>Courage</span>
+                                <span class="text-zikoBlue">95%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-townBorder rounded-full overflow-hidden">
+                                <div class="h-full bg-zikoBlue w-[95%]"></div>
+                            </div>
+
+                            <div class="flex justify-between text-[11px] font-mono text-gray-400">
+                                <span>Strategy</span>
+                                <span class="text-zikoBlue">88%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-townBorder rounded-full overflow-hidden">
+                                <div class="h-full bg-zikoBlue w-[88%]"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Voice Quote Button -->
+                    <button onclick="playVoiceQuote('ziko')" class="w-full py-3 rounded-xl bg-zikoBlue/20 hover:bg-zikoBlue text-zikoBlue hover:text-white font-fredoka text-xs font-bold uppercase transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-volume-high"></i> "Let's Solve This Mystery!"
+                    </button>
+                </div>
+
+                <!-- BOBO CARD -->
+                <div class="character-card glass-panel rounded-2xl p-6 border border-townBorder glow-bobo flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-boboOrange/20 text-boboOrange text-xs font-mono font-bold">16 YEARS OLD</span>
+                            <span class="text-xs text-gray-400 font-mono">ID: CT-02</span>
+                        </div>
+
+                        <div class="w-full h-48 rounded-xl bg-gradient-to-b from-boboOrange/20 to-townCard flex items-center justify-center relative overflow-hidden border border-boboOrange/30 mb-5">
+                            <svg viewBox="0 0 200 200" class="w-36 h-36">
+                                <circle cx="100" cy="70" r="50" fill="#222"/>
+                                <circle cx="100" cy="105" r="52" fill="#FFE5D9"/>
+                                <circle cx="80" cy="100" r="6" fill="#111"/>
+                                <circle cx="120" cy="100" r="6" fill="#111"/>
+                                <path d="M78 115 Q 100 145 122 115 Z" fill="#D90429"/>
+                                <path d="M50 150 Q 100 180 150 150 L 160 200 L 40 200 Z" fill="#FF6B00"/>
+                            </svg>
+                        </div>
+
+                        <h3 class="font-fredoka text-3xl font-bold text-white mb-1">BOBO</h3>
+                        <p class="text-xs text-boboOrange font-semibold uppercase tracking-wider mb-4">Comedy Relief & Foodie</p>
+
+                        <div class="space-y-2 text-xs text-gray-300 font-outfit border-t border-b border-townBorder py-3 mb-4">
+                            <div><strong class="text-gray-400 font-mono">Build:</strong> Chubby with a round friendly face</div>
+                            <div><strong class="text-gray-400 font-mono">Hair:</strong> Short dark cropped hair</div>
+                            <div><strong class="text-gray-400 font-mono">Outfit:</strong> Vibrant orange T-shirt & blue trousers</div>
+                            <div><strong class="text-gray-400 font-mono">Speciality:</strong> Unstoppable appetite & jokes</div>
+                        </div>
+
+                        <div class="space-y-2 mb-6">
+                            <div class="flex justify-between text-[11px] font-mono text-gray-400">
+                                <span>Snack radar</span>
+                                <span class="text-boboOrange">100%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-townBorder rounded-full overflow-hidden">
+                                <div class="h-full bg-boboOrange w-[100%]"></div>
+                            </div>
+
+                            <div class="flex justify-between text-[11px] font-mono text-gray-400">
+                                <span>Humor</span>
+                                <span class="text-boboOrange">96%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-townBorder rounded-full overflow-hidden">
+                                <div class="h-full bg-boboOrange w-[96%]"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="playVoiceQuote('bobo')" class="w-full py-3 rounded-xl bg-boboOrange/20 hover:bg-boboOrange text-boboOrange hover:text-white font-fredoka text-xs font-bold uppercase transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-volume-high"></i> "Is Anyone Gonna Eat That?"
+                    </button>
+                </div>
+
+                <!-- MIMI CARD -->
+                <div class="character-card glass-panel rounded-2xl p-6 border border-townBorder glow-mimi flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-mimiPurple/20 text-mimiPurple text-xs font-mono font-bold">15 YEARS OLD</span>
+                            <span class="text-xs text-gray-400 font-mono">ID: CT-03</span>
+                        </div>
+
+                        <div class="w-full h-48 rounded-xl bg-gradient-to-b from-mimiPurple/20 to-townCard flex items-center justify-center relative overflow-hidden border border-mimiPurple/30 mb-5">
+                            <svg viewBox="0 0 200 200" class="w-36 h-36">
+                                <circle cx="140" cy="70" r="22" fill="#3D0066"/>
+                                <path d="M50 80 Q 100 30 150 80" fill="#3D0066"/>
+                                <circle cx="100" cy="100" r="44" fill="#FCD5CE"/>
+                                <ellipse cx="82" cy="95" rx="7" ry="9" fill="#2B9348"/>
+                                <ellipse cx="118" cy="95" rx="7" ry="9" fill="#2B9348"/>
+                                <path d="M88 118 Q 100 126 112 118" stroke="#333" stroke-width="3" fill="none"/>
+                                <path d="M55 140 Q 100 170 145 140 L 155 190 L 45 190 Z" fill="#9D4EDD"/>
+                            </svg>
+                        </div>
+
+                        <h3 class="font-fredoka text-3xl font-bold text-white mb-1">MIMI</h3>
+                        <p class="text-xs text-mimiPurple font-semibold uppercase tracking-wider mb-4">Brains & Tech Strategist</p>
+
+                        <div class="space-y-2 text-xs text-gray-300 font-outfit border-t border-b border-townBorder py-3 mb-4">
+                            <div><strong class="text-gray-400 font-mono">Hair:</strong> Neat dark ponytail</div>
+                            <div><strong class="text-gray-400 font-mono">Eyes:</strong> Expressive green eyes</div>
+                            <div><strong class="text-gray-400 font-mono">Outfit:</strong> Stylish purple jacket & dark trousers</div>
+                            <div><strong class="text-gray-400 font-mono">Speciality:</strong> Gadget programming & analytics</div>
+                        </div>
+
+                        <div class="space-y-2 mb-6">
+                            <div class="flex justify-between text-[11px] font-mono text-gray-400">
+                                <span>IQ & Hacking</span>
+                                <span class="text-mimiPurple">98%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-townBorder rounded-full overflow-hidden">
+                                <div class="h-full bg-mimiPurple w-[98%]"></div>
+                            </div>
+
+                            <div class="flex justify-between text-[11px] font-mono text-gray-400">
+                                <span>Logic</span>
+                                <span class="text-mimiPurple">94%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-townBorder rounded-full overflow-hidden">
+                                <div class="h-full bg-mimiPurple w-[94%]"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="playVoiceQuote('mimi')" class="w-full py-3 rounded-xl bg-mimiPurple/20 hover:bg-mimiPurple text-mimiPurple hover:text-white font-fredoka text-xs font-bold uppercase transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-volume-high"></i> "I Have A Tech Plan!"
+                    </button>
+                </div>
+
+                <!-- ROBO CARD -->
+                <div class="character-card glass-panel rounded-2xl p-6 border border-townBorder glow-robo flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-roboYellow/20 text-roboYellow text-xs font-mono font-bold">ROBOT UNIT</span>
+                            <span class="text-xs text-gray-400 font-mono">ID: CT-04</span>
+                        </div>
+
+                        <div class="w-full h-48 rounded-xl bg-gradient-to-b from-roboYellow/20 to-townCard flex items-center justify-center relative overflow-hidden border border-roboYellow/30 mb-5">
+                            <svg viewBox="0 0 200 200" class="w-36 h-36">
+                                <rect x="50" y="50" width="100" height="90" rx="40" fill="#FFD166"/>
+                                <line x1="100" y1="50" x2="100" y2="25" stroke="#FFD166" stroke-width="6"/>
+                                <circle cx="100" cy="20" r="8" fill="#00F5D4"/>
+                                <rect x="65" y="70" width="70" height="40" rx="15" fill="#111"/>
+                                <circle cx="85" cy="90" r="9" fill="#0070F3"/>
+                                <circle cx="115" cy="90" r="9" fill="#0070F3"/>
+                            </svg>
+                        </div>
+
+                        <h3 class="font-fredoka text-3xl font-bold text-white mb-1">ROBO</h3>
+                        <p class="text-xs text-roboYellow font-semibold uppercase tracking-wider mb-4">Wildcard & Mascot</p>
+
+                        <div class="space-y-2 text-xs text-gray-300 font-outfit border-t border-b border-townBorder py-3 mb-4">
+                            <div><strong class="text-gray-400 font-mono">Body:</strong> Rounded yellow mechanical chassis</div>
+                            <div><strong class="text-gray-400 font-mono">Eyes:</strong> Glowing neon blue digital optics</div>
+                            <div><strong class="text-gray-400 font-mono">Features:</strong> Hologram projector & laser routines</div>
+                            <div><strong class="text-gray-400 font-mono">Personality:</strong> Innocent, chaotic, and playful</div>
+                        </div>
+
+                        <div class="space-y-2 mb-6">
+                            <div class="flex justify-between text-[11px] font-mono text-gray-400">
+                                <span>Unpredictability</span>
+                                <span class="text-roboYellow">99%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-townBorder rounded-full overflow-hidden">
+                                <div class="h-full bg-roboYellow w-[99%]"></div>
+                            </div>
+
+                            <div class="flex justify-between text-[11px] font-mono text-gray-400">
+                                <span>Energy</span>
+                                <span class="text-roboYellow">100%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-townBorder rounded-full overflow-hidden">
+                                <div class="h-full bg-roboYellow w-[100%]"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="playVoiceQuote('robo')" class="w-full py-3 rounded-xl bg-roboYellow/20 hover:bg-roboYellow text-roboYellow hover:text-townDark font-fredoka text-xs font-bold uppercase transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-volume-high"></i> "Beep-Boop-Bzzzt!"
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. EPISODE HUB & STORY SCRIPT VIEWER -->
+    <section id="episodes" class="py-24 bg-townDark/90 border-t border-townBorder relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="font-mono text-xs uppercase text-boboOrange tracking-widest block mb-2">Connected Story Arc</span>
+                    <h2 class="font-fredoka text-4xl sm:text-5xl font-bold text-white uppercase">
+                        EPISODE CATALOG & SCRIPT HUB
+                    </h2>
+                </div>
+                <p class="text-gray-400 text-xs md:text-sm max-w-md mt-4 md:mt-0 font-outfit">
+                    Every episode follows a structured narrative flow: <strong>Beginning &rarr; Middle &rarr; Climax &rarr; Resolution</strong>.
+                </p>
+            </div>
+
+            <!-- Episodes Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- EPISODE 1 -->
+                <div class="glass-panel rounded-2xl border border-townBorder p-6 flex flex-col justify-between hover:border-zikoBlue transition-all group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-zikoBlue/20 text-zikoBlue text-xs font-mono font-bold">EPISODE 01</span>
+                            <span class="text-xs text-gray-400 font-mono"><i class="fa-regular fa-clock mr-1"></i> 22 MINS</span>
+                        </div>
+                        <h3 class="font-fredoka text-2xl font-bold text-white mb-2 group-hover:text-zikoBlue transition-colors">
+                            The Mysterious Noise in the Old Clocktower
+                        </h3>
+                        <p class="text-xs text-gray-300 font-outfit leading-relaxed mb-6">
+                            When an eerie gear-clanking sound echoes across Crazy Town at midnight, Ziko leads the team into the abandoned town clocktower to discover an ancient mechanical secret.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-2 text-[11px] font-mono text-gray-400 bg-townDark p-3 rounded-xl border border-townBorder mb-6">
+                            <div><strong>Featured:</strong> Ziko & Robo</div>
+                            <div><strong>Location:</strong> Clocktower</div>
+                            <div><strong>Theme:</strong> Mystery / Adventure</div>
+                            <div><strong>Status:</strong> Completed 3D Render</div>
+                        </div>
+                    </div>
+
+                    <button onclick="openScriptModal(1)" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-zikoBlue to-cyan-500 text-white font-fredoka text-xs font-bold uppercase tracking-wider hover:brightness-110 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-scroll"></i> Read Script & Storyboard
+                    </button>
+                </div>
+
+                <!-- EPISODE 2 -->
+                <div class="glass-panel rounded-2xl border border-townBorder p-6 flex flex-col justify-between hover:border-boboOrange transition-all group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-boboOrange/20 text-boboOrange text-xs font-mono font-bold">EPISODE 02</span>
+                            <span class="text-xs text-gray-400 font-mono"><i class="fa-regular fa-clock mr-1"></i> 22 MINS</span>
+                        </div>
+                        <h3 class="font-fredoka text-2xl font-bold text-white mb-2 group-hover:text-boboOrange transition-colors">
+                            Bobo's Giant Pizza Catastrophe
+                        </h3>
+                        <p class="text-xs text-gray-300 font-outfit leading-relaxed mb-6">
+                            Bobo attempts to build the world's largest cheese pizza using Mimi's automated baking ray, but the giant pizza comes alive and rolls down main street!
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-2 text-[11px] font-mono text-gray-400 bg-townDark p-3 rounded-xl border border-townBorder mb-6">
+                            <div><strong>Featured:</strong> Bobo & Mimi</div>
+                            <div><strong>Location:</strong> Town Square</div>
+                            <div><strong>Theme:</strong> Slapstick Comedy</div>
+                            <div><strong>Status:</strong> Completed 3D Render</div>
+                        </div>
+                    </div>
+
+                    <button onclick="openScriptModal(2)" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-boboOrange to-amber-500 text-townDark font-fredoka text-xs font-bold uppercase tracking-wider hover:brightness-110 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-scroll"></i> Read Script & Storyboard
+                    </button>
+                </div>
+
+                <!-- EPISODE 3 -->
+                <div class="glass-panel rounded-2xl border border-townBorder p-6 flex flex-col justify-between hover:border-roboYellow transition-all group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-roboYellow/20 text-roboYellow text-xs font-mono font-bold">EPISODE 03</span>
+                            <span class="text-xs text-gray-400 font-mono"><i class="fa-regular fa-clock mr-1"></i> 22 MINS</span>
+                        </div>
+                        <h3 class="font-fredoka text-2xl font-bold text-white mb-2 group-hover:text-roboYellow transition-colors">
+                            Robo's Wild Hologram Glitch
+                        </h3>
+                        <p class="text-xs text-gray-300 font-outfit leading-relaxed mb-6">
+                            After getting stuck in a magnet trap, Robo's holographic emitter glitches out, projecting giant spectral dinosaurs that scare everyone in Crazy Town High.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-2 text-[11px] font-mono text-gray-400 bg-townDark p-3 rounded-xl border border-townBorder mb-6">
+                            <div><strong>Featured:</strong> Robo & All</div>
+                            <div><strong>Location:</strong> High School</div>
+                            <div><strong>Theme:</strong> Sci-Fi Chaos</div>
+                            <div><strong>Status:</strong> Completed 3D Render</div>
+                        </div>
+                    </div>
+
+                    <button onclick="openScriptModal(3)" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-roboYellow to-yellow-300 text-townDark font-fredoka text-xs font-bold uppercase tracking-wider hover:brightness-110 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-scroll"></i> Read Script & Storyboard
+                    </button>
+                </div>
+
+                <!-- EPISODE 4 -->
+                <div class="glass-panel rounded-2xl border border-townBorder p-6 flex flex-col justify-between hover:border-mimiPurple transition-all group">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-mimiPurple/20 text-mimiPurple text-xs font-mono font-bold">EPISODE 04</span>
+                            <span class="text-xs text-gray-400 font-mono"><i class="fa-regular fa-clock mr-1"></i> 22 MINS</span>
+                        </div>
+                        <h3 class="font-fredoka text-2xl font-bold text-white mb-2 group-hover:text-mimiPurple transition-colors">
+                            The Secret Tunnel Under Crazy Town School
+                        </h3>
+                        <p class="text-xs text-gray-300 font-outfit leading-relaxed mb-6">
+                            Mimi's subterranean radar detects an ancient underground passageway beneath the school gymnasium leading to a forgotten underground cavern network.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-2 text-[11px] font-mono text-gray-400 bg-townDark p-3 rounded-xl border border-townBorder mb-6">
+                            <div><strong>Featured:</strong> Mimi & Ziko</div>
+                            <div><strong>Location:</strong> School Tunnels</div>
+                            <div><strong>Theme:</strong> Exploration</div>
+                            <div><strong>Status:</strong> Completed 3D Render</div>
+                        </div>
+                    </div>
+
+                    <button onclick="openScriptModal(4)" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-mimiPurple to-pink-500 text-white font-fredoka text-xs font-bold uppercase tracking-wider hover:brightness-110 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-scroll"></i> Read Script & Storyboard
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. INTERACTIVE "CRAZY TOWN" WORLD MAP -->
+    <section id="map" class="py-24 bg-townDark border-t border-townBorder relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="font-mono text-xs uppercase text-roboYellow tracking-widest block mb-2">Fictional Environment</span>
+                <h2 class="font-fredoka text-4xl sm:text-5xl font-bold text-white uppercase">
+                    INTERACTIVE CRAZY TOWN MAP
+                </h2>
+                <p class="text-gray-400 text-sm mt-3">
+                    Click any landmark hotspot on the map to inspect location lore, key episode appearances, and hidden easter eggs.
+                </p>
+            </div>
+
+            <!-- Map Viewport Canvas Wrapper -->
+            <div class="relative w-full aspect-[16/9] min-h-[420px] rounded-3xl glass-panel border border-townBorder overflow-hidden shadow-2xl bg-gradient-to-tr from-[#0D1B2A] via-[#1B263B] to-[#0D1B2A] p-4 flex items-center justify-center">
+                
+                <!-- Vector Map Styling Grid lines -->
+                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#00F5D4_1px,transparent_1px)] [background-size:24px_24px]"></div>
+
+                <!-- Illustrated Map SVG Canvas -->
+                <svg viewBox="0 0 1000 600" class="w-full h-full object-cover">
+                    <!-- Rivers & Roads -->
+                    <path d="M 0 300 Q 250 200 500 350 T 1000 250" fill="none" stroke="#0070F3" stroke-width="24" opacity="0.4"/>
+                    <path d="M 200 0 L 200 600 M 500 0 L 500 600 M 800 0 L 800 600 M 0 200 L 1000 200 M 0 450 L 1000 450" fill="none" stroke="#262C40" stroke-width="8" stroke-dasharray="12,12"/>
+
+                    <!-- Map Regions / Zones -->
+                    <circle cx="200" cy="150" r="70" fill="#9D4EDD" opacity="0.15"/>
+                    <circle cx="500" cy="200" r="90" fill="#FF6B00" opacity="0.15"/>
+                    <circle cx="800" cy="180" r="75" fill="#0070F3" opacity="0.15"/>
+                    <circle cx="300" cy="450" r="80" fill="#FFD166" opacity="0.15"/>
+                    <circle cx="750" cy="450" r="85" fill="#00F5D4" opacity="0.15"/>
+
+                    <!-- Zone Text Markers -->
+                    <text x="200" y="100" fill="#AAA" font-size="14" font-family="Fredoka" text-anchor="middle">NORTH TECH DISTRICT</text>
+                    <text x="500" y="100" fill="#AAA" font-size="14" font-family="Fredoka" text-anchor="middle">CENTRAL TOWN SQUARE</text>
+                    <text x="800" y="90" fill="#AAA" font-size="14" font-family="Fredoka" text-anchor="middle">OLD CLOCKTOWER HILL</text>
+                    <text x="300" y="560" fill="#AAA" font-size="14" font-family="Fredoka" text-anchor="middle">CRAZY TOWN HIGH</text>
+                    <text x="750" y="560" fill="#AAA" font-size="14" font-family="Fredoka" text-anchor="middle">WHISPERING PINES PARK</text>
+                </svg>
+
+                <!-- HOTSPOT 1: MIMI'S LAB -->
+                <button onclick="showMapSpotInfo('Mimi\'s Tech Lab Garage', 'Mimi\'s high-tech garage equipped with multi-monitor rigs, 3D printers, and Robo\'s charging pod station.', 'Episode 3 & 4', 'Contains Robo\'s original spare battery blueprints on the wall.')" 
+                        class="absolute top-[25%] left-[20%] group focus:outline-none">
+                    <span class="relative flex h-8 w-8">
+                        <span class="map-ping absolute inline-flex h-full w-full rounded-full bg-mimiPurple opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-8 w-8 bg-mimiPurple text-white items-center justify-center font-bold shadow-lg group-hover:scale-125 transition-transform">
+                            <i class="fa-solid fa-laptop-code text-xs"></i>
+                        </span>
+                    </span>
+                </button>
+
+                <!-- HOTSPOT 2: TOWN SQUARE -->
+                <button onclick="showMapSpotInfo('Crazy Town Square & Bakery', 'The heart of Crazy Town where Bobo frequents the legendary Italian Bakery and Burger Joint.', 'Episode 2', 'Bobo holds the local record of eating 14 donuts in 3 minutes here.')" 
+                        class="absolute top-[33%] left-[50%] group focus:outline-none">
+                    <span class="relative flex h-8 w-8">
+                        <span class="map-ping absolute inline-flex h-full w-full rounded-full bg-boboOrange opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-8 w-8 bg-boboOrange text-white items-center justify-center font-bold shadow-lg group-hover:scale-125 transition-transform">
+                            <i class="fa-solid fa-utensils text-xs"></i>
+                        </span>
+                    </span>
+                </button>
+
+                <!-- HOTSPOT 3: CLOCKTOWER -->
+                <button onclick="showMapSpotInfo('The Abandoned Clocktower', 'A 120-year-old stone clocktower built over hidden mechanical gears and mysterious underground levers.', 'Episode 1', 'The clock face has a hidden lever that opens a secret spiral stairwell.')" 
+                        class="absolute top-[30%] left-[80%] group focus:outline-none">
+                    <span class="relative flex h-8 w-8">
+                        <span class="map-ping absolute inline-flex h-full w-full rounded-full bg-zikoBlue opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-8 w-8 bg-zikoBlue text-white items-center justify-center font-bold shadow-lg group-hover:scale-125 transition-transform">
+                            <i class="fa-solid fa-clock text-xs"></i>
+                        </span>
+                    </span>
+                </button>
+
+                <!-- HOTSPOT 4: HIGH SCHOOL -->
+                <button onclick="showMapSpotInfo('Crazy Town High School', 'Where Ziko, Bobo, and Mimi attend school. Features science labs, gymnasium, and secret under-floor tunnels.', 'Episode 3 & 4', 'The basement gym storage room conceals an old trapdoor.')" 
+                        class="absolute top-[75%] left-[30%] group focus:outline-none">
+                    <span class="relative flex h-8 w-8">
+                        <span class="map-ping absolute inline-flex h-full w-full rounded-full bg-roboYellow opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-8 w-8 bg-roboYellow text-townDark items-center justify-center font-bold shadow-lg group-hover:scale-125 transition-transform">
+                            <i class="fa-solid fa-school text-xs"></i>
+                        </span>
+                    </span>
+                </button>
+
+                <!-- HOTSPOT 5: PARK -->
+                <button onclick="showMapSpotInfo('Whispering Pines Park', 'A dense, picturesque woodland park with winding bike trails and mysterious glowing mushrooms at night.', 'Upcoming Episode', 'Rumored to hide a lost 19th-century time capsule.')" 
+                        class="absolute top-[75%] left-[75%] group focus:outline-none">
+                    <span class="relative flex h-8 w-8">
+                        <span class="map-ping absolute inline-flex h-full w-full rounded-full bg-townNeon opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-8 w-8 bg-townNeon text-townDark items-center justify-center font-bold shadow-lg group-hover:scale-125 transition-transform">
+                            <i class="fa-solid fa-tree text-xs"></i>
+                        </span>
+                    </span>
+                </button>
+
+            </div>
+
+            <!-- Map Info Inspector Drawer Box -->
+            <div id="map-info-box" class="mt-8 glass-panel rounded-2xl p-6 border border-townBorder hidden transition-all">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <span class="font-mono text-xs uppercase text-boboOrange tracking-wider block" id="map-spot-tag">Selected Landmark</span>
+                        <h3 class="font-fredoka text-2xl font-bold text-white" id="map-spot-title">Town Square</h3>
+                        <p class="text-xs text-gray-300 font-outfit mt-1" id="map-spot-desc">Select a marker above to view location details.</p>
+                    </div>
+                    <div class="bg-townDark p-4 rounded-xl border border-townBorder text-xs space-y-1 shrink-0 font-mono">
+                        <div><strong class="text-gray-400">Connected Episode:</strong> <span text-white id="map-spot-ep">Episode 2</span></div>
+                        <div><strong class="text-gray-400">Easter Egg:</strong> <span class="text-roboYellow" id="map-spot-egg">Hidden Donuts</span></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 5. PRODUCTION BIBLE & EPISODE GENERATOR (IDEA LAB) -->
+    <section id="production" class="py-24 bg-townDark/95 border-t border-townBorder">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <!-- Left: Studio Directing Bible Specs -->
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="font-mono text-xs uppercase text-townNeon tracking-widest block">3D Production Standard</span>
+                    <h2 class="font-fredoka text-4xl font-bold text-white uppercase leading-tight">
+                        ANIMATION STYLE & DIRECTING BIBLE
+                    </h2>
+
+                    <p class="text-xs md:text-sm text-gray-300 font-outfit leading-relaxed">
+                        "THE CRAZY TOWN" is rendered using cinematic ray-tracing pipelines matching feature film animation standards (DreamWorks / Pixar inspired).
+                    </p>
+
+                    <!-- Hex Palette & Render Standards -->
+                    <div class="space-y-4 pt-2">
+                        <div class="glass-panel p-4 rounded-xl border border-townBorder">
+                            <h4 class="font-fredoka text-sm text-white mb-3">Character Palette Compliance Hex Codes</h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-[11px] font-mono">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-4 h-4 rounded bg-[#0070F3] border border-white"></span>
+                                    <span>Ziko Blue (#0070F3)</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-4 h-4 rounded bg-[#FF6B00] border border-white"></span>
+                                    <span>Bobo Orange (#FF6B00)</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-4 h-4 rounded bg-[#9D4EDD] border border-white"></span>
+                                    <span>Mimi Purple (#9D4EDD)</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-4 h-4 rounded bg-[#FFD166] border border-white"></span>
+                                    <span>Robo Yellow (#FFD166)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel p-4 rounded-xl border border-townBorder space-y-2 text-xs font-outfit">
+                            <div><strong class="text-white font-mono">Render FPS:</strong> 24.00 fps (Cinematic Motion Blur enabled)</div>
+                            <div><strong class="text-white font-mono">Camera Lens:</strong> 35mm Prime for dialogs, 18mm Wide for slapstick action</div>
+                            <div><strong class="text-white font-mono">Facial Rigging:</strong> 120 blendshapes per core character for emotional depth</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Interactive Episode Generator (Idea Lab) -->
+                <div class="lg:col-span-6 glass-panel p-8 rounded-3xl border border-townBorder space-y-6">
+                    <div>
+                        <span class="font-mono text-xs uppercase text-roboYellow tracking-wider block mb-1">Fan & Studio Interactive Tool</span>
+                        <h3 class="font-fredoka text-2xl font-bold text-white uppercase">
+                            EPISODE IDEA GENERATOR
+                        </h3>
+                        <p class="text-xs text-gray-400 font-outfit mt-1">Select parameters to construct a new structured episode storyline.</p>
+                    </div>
+
+                    <form id="idea-generator-form" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Lead Character Duo</label>
+                            <select id="gen-duo" class="w-full bg-townDark border border-townBorder rounded-xl p-3 text-xs text-white focus:border-boboOrange focus:outline-none">
+                                <option value="Ziko & Bobo">Ziko & Bobo (Leader + Comedy)</option>
+                                <option value="Mimi & Robo">Mimi & Robo (Tech + Wildcard)</option>
+                                <option value="Ziko & Mimi">Ziko & Mimi (Leader + Brains)</option>
+                                <option value="Bobo & Robo">Bobo & Robo (Chaos Duo)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Episode Location</label>
+                            <select id="gen-location" class="w-full bg-townDark border border-townBorder rounded-xl p-3 text-xs text-white focus:border-boboOrange focus:outline-none">
+                                <option value="Town Clocktower">Abandoned Clocktower</option>
+                                <option value="School Gymnasium">School Gymnasium Basement</option>
+                                <option value="Town Bakery">Crazy Town Bakery</option>
+                                <option value="Whispering Pines Park">Whispering Pines Forest</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono uppercase text-gray-400 mb-1">Mystery Object / Catalyst</label>
+                            <select id="gen-object" class="w-full bg-townDark border border-townBorder rounded-xl p-3 text-xs text-white focus:border-boboOrange focus:outline-none">
+                                <option value="a glowing golden key">A Glowing Golden Key</option>
+                                <option value="a runaway remote control monster truck">A Runaway RC Monster Truck</option>
+                                <option value="an oversized recipe book">An Oversized Recipe Book</option>
+                                <option value="a strange alien gadget chip">A Strange Alien Gadget Chip</option>
+                            </select>
+                        </div>
+
+                        <button type="button" onclick="generateEpisodeStory()" class="w-full py-4 rounded-xl bg-gradient-to-r from-townNeon via-roboYellow to-boboOrange text-townDark font-fredoka font-bold text-xs uppercase tracking-widest shadow-xl hover:brightness-110 transition-all">
+                            <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Generate Episode Arc
+                        </button>
+                    </form>
+
+                    <!-- Generated Story Output Box -->
+                    <div id="story-output-box" class="hidden p-4 rounded-xl bg-townDark border border-townBorder space-y-3">
+                        <div class="flex items-center justify-between border-b border-townBorder pb-2">
+                            <span class="font-fredoka text-sm text-roboYellow uppercase font-bold" id="story-title">Generated Episode Title</span>
+                            <span class="text-[10px] font-mono text-gray-400">AI STORYBOARD</span>
+                        </div>
+                        <div class="space-y-2 text-xs font-outfit text-gray-300">
+                            <div><strong class="text-zikoBlue font-mono">Act 1 (Beginning):</strong> <span id="story-act1"></span></div>
+                            <div><strong class="text-boboOrange font-mono">Act 2 (Middle):</strong> <span id="story-act2"></span></div>
+                            <div><strong class="text-mimiPurple font-mono">Act 3 (Climax):</strong> <span id="story-act3"></span></div>
+                            <div><strong class="text-townNeon font-mono">Act 4 (Ending):</strong> <span id="story-act4"></span></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. SOUNDBOARD SECTION -->
+    <section id="soundboard" class="py-24 bg-townDark border-t border-townBorder">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="font-mono text-xs uppercase text-boboOrange tracking-widest block mb-2">Audio Soundboard</span>
+                <h2 class="font-fredoka text-4xl sm:text-5xl font-bold text-white uppercase">
+                    CHARACTER VOICE BOARD
+                </h2>
+                <p class="text-gray-400 text-sm mt-3">
+                    Click buttons to trigger signature character voice quotes & synthesized audio effects.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <button onclick="playVoiceQuote('ziko')" class="glass-panel p-6 rounded-2xl border border-zikoBlue/40 hover:bg-zikoBlue text-white hover:text-white transition-all text-center group">
+                    <i class="fa-solid fa-play text-2xl text-zikoBlue group-hover:text-white mb-3 block"></i>
+                    <span class="font-fredoka text-lg font-bold block">ZIKO</span>
+                    <span class="text-[11px] font-mono text-gray-400 group-hover:text-white">"Adventure Time!"</span>
+                </button>
+
+                <button onclick="playVoiceQuote('bobo')" class="glass-panel p-6 rounded-2xl border border-boboOrange/40 hover:bg-boboOrange text-white hover:text-white transition-all text-center group">
+                    <i class="fa-solid fa-pizza-slice text-2xl text-boboOrange group-hover:text-white mb-3 block"></i>
+                    <span class="font-fredoka text-lg font-bold block">BOBO</span>
+                    <span class="text-[11px] font-mono text-gray-400 group-hover:text-white">"Pizza Emergency!"</span>
+                </button>
+
+                <button onclick="playVoiceQuote('mimi')" class="glass-panel p-6 rounded-2xl border border-mimiPurple/40 hover:bg-mimiPurple text-white hover:text-white transition-all text-center group">
+                    <i class="fa-solid fa-microchip text-2xl text-mimiPurple group-hover:text-white mb-3 block"></i>
+                    <span class="font-fredoka text-lg font-bold block">MIMI</span>
+                    <span class="text-[11px] font-mono text-gray-400 group-hover:text-white">"Tech Online!"</span>
+                </button>
+
+                <button onclick="playVoiceQuote('robo')" class="glass-panel p-6 rounded-2xl border border-roboYellow/40 hover:bg-roboYellow text-white hover:text-townDark transition-all text-center group">
+                    <i class="fa-solid fa-robot text-2xl text-roboYellow group-hover:text-townDark mb-3 block"></i>
+                    <span class="font-fredoka text-lg font-bold block">ROBO</span>
+                    <span class="text-[11px] font-mono text-gray-400 group-hover:text-townDark">"Beep Boop!"</span>
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-townDark border-t border-townBorder py-12 text-gray-400 font-outfit text-xs">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-boboOrange text-townDark font-fredoka font-bold flex items-center justify-center text-base">
+                    CT
+                </div>
+                <span class="font-fredoka text-base text-white font-bold">THE CRAZY TOWN</span>
+            </div>
+
+            <p>&copy; 2026 THE CRAZY TOWN Animation Studios. All character models and scripts reserved.</p>
+
+            <div class="flex items-center space-x-4 text-base">
+                <a href="#" class="hover:text-boboOrange transition-colors"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" class="hover:text-zikoBlue transition-colors"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="hover:text-mimiPurple transition-colors"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPT & STORYBOARD MODAL -->
+    <div id="scriptModal" class="fixed inset-0 z-50 hidden bg-townDark/90 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-panel border border-townBorder max-w-2xl w-full rounded-3xl p-8 relative max-h-[85vh] overflow-y-auto shadow-2xl space-y-6">
+            <button onclick="closeScriptModal()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div>
+                <span class="font-mono text-xs uppercase text-boboOrange tracking-widest block mb-1">Production Script</span>
+                <h3 id="modalEpTitle" class="font-fredoka text-3xl font-bold text-white uppercase">Episode Title</h3>
+            </div>
+
+            <!-- Scene Breakdown -->
+            <div class="space-y-4 text-xs font-outfit">
+                <div class="p-4 rounded-xl bg-townDark border border-townBorder space-y-1">
+                    <span class="font-mono text-zikoBlue font-bold uppercase">Act 1: Beginning</span>
+                    <p id="modalAct1" class="text-gray-300"></p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-townDark border border-townBorder space-y-1">
+                    <span class="font-mono text-boboOrange font-bold uppercase">Act 2: Middle</span>
+                    <p id="modalAct2" class="text-gray-300"></p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-townDark border border-townBorder space-y-1">
+                    <span class="font-mono text-mimiPurple font-bold uppercase">Act 3: Climax</span>
+                    <p id="modalAct3" class="text-gray-300"></p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-townDark border border-townBorder space-y-1">
+                    <span class="font-mono text-townNeon font-bold uppercase">Act 4: Resolution</span>
+                    <p id="modalAct4" class="text-gray-300"></p>
+                </div>
+            </div>
+
+            <!-- Voice & Camera Director Note -->
+            <div class="p-4 rounded-xl bg-boboOrange/10 border border-boboOrange/30 text-xs text-boboOrange font-mono">
+                <i class="fa-solid fa-video mr-2"></i><strong>Camera Note:</strong> Use 24mm wide angle tracking shots during climax action routines.
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT CONTROLLERS & SYNTHESIZED AUDIO ENGINE -->
+    <script>
+        // Web Audio Synthesizer (Zero External Dependencies Audio Engine)
+        let soundEnabled = true;
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+            }
+        }
+
+        function toggleSoundFX() {
+            soundEnabled = !soundEnabled;
+            const btnText = document.getElementById('sound-status-text');
+            const icon = document.getElementById('sound-icon');
+
+            if (soundEnabled) {
+                btnText.innerText = "Audio: ON";
+                icon.className = "fa-solid fa-volume-high text-boboOrange";
+                playSynthesizedSound('click');
+            } else {
+                btnText.innerText = "Audio: OFF";
+                icon.className = "fa-solid fa-volume-xmark text-gray-500";
+            }
+        }
+
+        function playSynthesizedSound(type) {
+            if (!soundEnabled) return;
+            initAudio();
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            const now = audioCtx.currentTime;
+
+            if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(400, now);
+                osc.frequency.exponentialRampToValueAtTime(800, now + 0.08);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                osc.start(now);
+                osc.stop(now + 0.08);
+            } else if (type === 'whoosh') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(600, now + 0.2);
+                gain.gain.setValueAtTime(0.25, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                osc.start(now);
+                osc.stop(now + 0.2);
+            } else if (type === 'ping') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(880, now);
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            } else if (type === 'logo') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(300, now);
+                osc.frequency.exponentialRampToValueAtTime(900, now + 0.3);
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            }
+        }
+
+        function showAudioToast(title, subtitle) {
+            const toast = document.getElementById('audio-toast');
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-subtitle').innerText = subtitle;
+            toast.classList.remove('hidden');
+
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2500);
+        }
+
+        function playVoiceQuote(character) {
+            playSynthesizedSound('ping');
+
+            if (character === 'ziko') {
+                showAudioToast("ZIKO:", "Let's Solve This Mystery Together!");
+            } else if (character === 'bobo') {
+                showAudioToast("BOBO:", "Is Anyone Gonna Eat That Giant Pizza?");
+            } else if (character === 'mimi') {
+                showAudioToast("MIMI:", "I Have A High-Tech Strategy Plan!");
+            } else if (character === 'robo') {
+                showAudioToast("ROBO:", "Beep-Boop-Bzzzt! Hologram Active!");
+            }
+        }
+
+        // Hero 3D Stage Switcher
+        function switchHeroStage(charKey) {
+            playSynthesizedSound('whoosh');
+            const stages = ['ziko', 'bobo', 'mimi', 'robo'];
+            const navBtns = document.querySelectorAll('.hero-nav-btn');
+
+            stages.forEach((key, index) => {
+                const stageEl = document.getElementById(`stage-${key}`);
+                if (key === charKey) {
+                    stageEl.classList.remove('scale-90', 'opacity-0', 'pointer-events-none');
+                    stageEl.classList.add('scale-100', 'opacity-100');
+                } else {
+                    stageEl.classList.add('scale-90', 'opacity-0', 'pointer-events-none');
+                    stageEl.classList.remove('scale-100', 'opacity-100');
+                }
+            });
+
+            const charTag = document.getElementById('hero-char-tag');
+            if (charKey === 'ziko') {
+                charTag.innerText = 'ZIKO - LEADER';
+                charTag.className = 'px-3 py-1 rounded-full bg-zikoBlue/20 text-zikoBlue font-fredoka text-xs font-semibold border border-zikoBlue/40';
+            } else if (charKey === 'bobo') {
+                charTag.innerText = 'BOBO - COMEDY';
+                charTag.className = 'px-3 py-1 rounded-full bg-boboOrange/20 text-boboOrange font-fredoka text-xs font-semibold border border-boboOrange/40';
+            } else if (charKey === 'mimi') {
+                charTag.innerText = 'MIMI - BRAINS';
+                charTag.className = 'px-3 py-1 rounded-full bg-mimiPurple/20 text-mimiPurple font-fredoka text-xs font-semibold border border-mimiPurple/40';
+            } else if (charKey === 'robo') {
+                charTag.innerText = 'ROBO - WILDCARD';
+                charTag.className = 'px-3 py-1 rounded-full bg-roboYellow/20 text-roboYellow font-fredoka text-xs font-semibold border border-roboYellow/40';
+            }
+        }
+
+        // Map Spot Inspector
+        function showMapSpotInfo(title, desc, ep, egg) {
+            playSynthesizedSound('click');
+            const box = document.getElementById('map-info-box');
+            document.getElementById('map-spot-title').innerText = title;
+            document.getElementById('map-spot-desc').innerText = desc;
+            document.getElementById('map-spot-ep').innerText = ep;
+            document.getElementById('map-spot-egg').innerText = egg;
+            box.classList.remove('hidden');
+        }
+
+        // Episode Scripts Data
+        const episodeData = {
+            1: {
+                title: "The Mysterious Noise in the Old Clocktower",
+                act1: "Ziko notices the town clock tower clanking at 12:00 midnight with unusual blue light flashes.",
+                act2: "Bobo brings snacks while Mimi uses her frequency scanner to trace an electromagnetic gear trap inside.",
+                act3: "Robo projects a hologram shield allowing Ziko to leap across moving giant brass gears and reset the master spring.",
+                act4: "The clock strikes normally again and reveals a secret wooden trapdoor leading under the town."
+            },
+            2: {
+                title: "Bobo's Giant Pizza Catastrophe",
+                act1: "Bobo bakes a 20-foot pizza in the square using Mimi's high-power heat projector.",
+                act2: "The cheese expands rapidly due to an overcharged thermal ray setting, creating a giant rolling cheese sphere.",
+                act3: "The team uses Ziko's zipline and Robo's low-gravity tractor beam to steer the pizza away from the town fountain.",
+                act4: "The giant pizza lands safely on a giant serving tray, feeding the entire town at a victory party."
+            },
+            3: {
+                title: "Robo's Wild Hologram Glitch",
+                act1: "Robo accidentally bumps into a magnetic locker at Crazy Town High School, scrambling his internal visor chip.",
+                act2: "Spectral holographic T-Rex dinosaurs fill the hallways, creating hilarious panic during science class.",
+                act3: "Mimi codes a patch drive while Ziko and Bobo distract the hologram dinosaurs with sports balls.",
+                act4: "Mimi reboots Robo, turning the hologram into a colorful festive laser light show."
+            },
+            4: {
+                title: "The Secret Tunnel Under Crazy Town School",
+                act1: "During gym class, Ziko finds a loose floor tile revealing an ancient stone staircase.",
+                act2: "The kids navigate underground caverns featuring glowing crystal walls and ancient gear doors.",
+                act3: "Mimi hacks an ancient lever lock mechanism just before a stone door closes.",
+                act4: "The tunnel leads directly into the basement of Mimi's Tech Lab, linking the town secrets together."
+            }
+        };
+
+        function openScriptModal(epNum) {
+            playSynthesizedSound('whoosh');
+            const data = episodeData[epNum];
+            document.getElementById('modalEpTitle').innerText = `EPISODE 0${epNum}: ${data.title}`;
+            document.getElementById('modalAct1').innerText = data.act1;
+            document.getElementById('modalAct2').innerText = data.act2;
+            document.getElementById('modalAct3').innerText = data.act3;
+            document.getElementById('modalAct4').innerText = data.act4;
+            document.getElementById('scriptModal').classList.remove('hidden');
+        }
+
+        function closeScriptModal() {
+            playSynthesizedSound('click');
+            document.getElementById('scriptModal').classList.add('hidden');
+        }
+
+        // Interactive Episode Idea Generator
+        function generateEpisodeStory() {
+            playSynthesizedSound('ping');
+            const duo = document.getElementById('gen-duo').value;
+            const location = document.getElementById('gen-location').value;
+            const object = document.getElementById('gen-object').value;
+
+            document.getElementById('story-title').innerText = `The Mystery of ${object.toUpperCase()}`;
+            document.getElementById('story-act1').innerText = `${duo} discover ${object} hidden near the ${location}.`;
+            document.getElementById('story-act2').innerText = `The item triggers an unexpected mechanical reaction causing chaos around ${location}.`;
+            document.getElementById('story-act3').innerText = `Mimi uses her tech scanner while Ziko coordinates a daring rescue maneuver.`;
+            document.getElementById('story-act4').innerText = `The mystery is resolved, and Bobo celebrates with a fresh tray of donuts.`;
+
+            document.getElementById('story-output-box').classList.remove('hidden');
+        }
+
+        // Mobile Menu Drawer Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileDrawer.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileDrawer.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
